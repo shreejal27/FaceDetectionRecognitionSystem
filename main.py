@@ -4,6 +4,7 @@ from PIL import Image, ImageTk # for image cropping and resizing
 
 
 class Face_Recognition_System:
+
     def __init__(self, root): # constructor
         self.root = root # root is the main window ; initializing the root
         self.root.geometry("1530x790+0+0")
@@ -11,6 +12,8 @@ class Face_Recognition_System:
 
         title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM", font=("times new roman", 20, "bold"), bg="white", fg="blue")
         title_lbl.place(x=0, y=0, width=1530, height=45)
+
+
 
         #student button
         img1 = Image.open(r"Images\students.jpg")
@@ -23,6 +26,8 @@ class Face_Recognition_System:
         b1_1 = Button(self.root, text="Student Details", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=200, y=300, width=220, height=40)
 
+
+
         #Detect Face button
         img2 = Image.open(r"Images\students.jpg")
         img2 = img2.resize((220, 220), Image.LANCZOS)
@@ -34,6 +39,8 @@ class Face_Recognition_System:
         b1_1 = Button(self.root, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=500, y=300, width=220, height=40)
 
+
+
         #Attendance Button
         img3 = Image.open(r"Images\students.jpg")
         img3 = img3.resize((220, 220), Image.LANCZOS)
@@ -44,6 +51,7 @@ class Face_Recognition_System:
 
         b1_1 = Button(self.root, text="Attendance", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=800, y=300, width=220, height=40)
+
 
 
         #Train Face Button
@@ -58,6 +66,7 @@ class Face_Recognition_System:
         b1_1.place(x=200, y=600, width=220, height=40 )
 
 
+
        #Photos Button
         img5 = Image.open(r"Images\students.jpg")
         img5 = img5.resize((220, 220), Image.LANCZOS)
@@ -70,6 +79,7 @@ class Face_Recognition_System:
         b1_1.place(x=500, y=600, width=220, height=40 )
 
 
+
        #Exit Button
         img6 = Image.open(r"Images\students.jpg")
         img6 = img6.resize((220, 220), Image.LANCZOS)
@@ -80,6 +90,10 @@ class Face_Recognition_System:
 
         b1_1 = Button(self.root, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=800, y=600, width=220, height=40 )
+
+
+
+
 
 
 
