@@ -156,9 +156,54 @@ class Student:
 
 
 
+        #Radio Buttons
+        radiobtn1= ttk.Radiobutton(class_student_frame, text="Take Photo Sample", value="Yes")
+        radiobtn1.grid(row=6, column=0)
+
+        radiobtn2= ttk.Radiobutton(class_student_frame, text="No Photo Sample", value="No")
+        radiobtn2.grid(row=6, column=1)
+
+
+        #Buttons Frame
+        btn_frame = Frame(class_student_frame, bd=2, relief=RIDGE, bg="white")
+        btn_frame.place(x=10, y=220, width=680, height=40)
+
+        save_btn = Button(btn_frame, text="Save", width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        save_btn.grid(row=0, column=0)
+
+        delete_btn = Button(btn_frame, text="Delete",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        delete_btn.grid(row=0, column=1)
+
+        update_btn = Button(btn_frame, text="Update",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        update_btn.grid(row=0, column=2)
+
+        reset_btn = Button(btn_frame, text="Reset",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        reset_btn.grid(row=0, column=3)
+
+
+        #Buttons Frame
+        btn_frame2 = Frame(class_student_frame, bd=2, relief=RIDGE, bg="white")
+        btn_frame2.place(x=10, y=260, width=680, height=40)
+
+        take_photo_btn = Button(btn_frame2, text="Take Photo Sample",width=33, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        take_photo_btn.grid(row=0, column=0)
+
+        update_photo_btn = Button(btn_frame2, text="Update Photo Sample",width=33, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        update_photo_btn.grid(row=0, column=1)
+
+
+
+
+
+
         #right label frame
         Right_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student Details", font=("times new roman", 12, "bold"))
         Right_frame.place(x=750, y=10, width=730, height=650)
+
+
+        #Search System
+        search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System", font=("times new roman", 12, "bold"))
+        search_frame.place(x=10, y=20, width=700, height=100)
 
 
 
