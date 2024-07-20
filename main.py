@@ -1,7 +1,7 @@
 from tkinter import * # for making powerful GUI model
 from tkinter import ttk  
 from PIL import Image, ImageTk # for image cropping and resizing
-
+from student import Student # importing the Student class from student.py
 
 class Face_Recognition_System:
 
@@ -20,10 +20,10 @@ class Face_Recognition_System:
         img1 = img1.resize((220, 220), Image.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img1)
 
-        b1 = Button(self.root, image=self.photoimg1, cursor="hand2")
+        b1 = Button(self.root, image=self.photoimg1, command=self.student_details, cursor="hand2")
         b1.place(x=200, y=100, width=220, height=220)
 
-        b1_1 = Button(self.root, text="Student Details", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+        b1_1 = Button(self.root, text="Student Details", command=self.student_details, cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=200, y=300, width=220, height=40)
 
 
@@ -91,6 +91,11 @@ class Face_Recognition_System:
         b1_1 = Button(self.root, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=800, y=600, width=220, height=40 )
 
+
+    #Functions button
+    def student_details(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Student(self.new_window)
 
 
 
