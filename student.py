@@ -297,6 +297,7 @@ class Student:
         self.student_table.column("photo", width=150)    
 
         self.student_table.pack(fill=BOTH, expand=1)
+        self.fetch_data()
 
 
     #Function decleration
@@ -305,8 +306,7 @@ class Student:
         if self.var_dep.get()=="Select Department" or self.var_std_name.get()=="" or self.var_std_id.get() == "":
             messagebox.showerror("Error", "All Fields are required", parent=self.root)
         else:
-            try:
-                
+            try: 
                 conn=mysql.connector.connect(host="localhost", username="root", password="", database="face_recognizer")
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into student values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
@@ -327,6 +327,7 @@ class Student:
                                                                                 self.var_radio1.get()
                                                                             ))
                 conn.commit()
+                self.fetch_data()
                 conn.close()
                 messagebox.showinfo("Success", "Student details has been added successfully", parent=self.root)
                 
@@ -335,6 +336,19 @@ class Student:
                 
 
     #fetch data
+    def fetch_data(self):
+        conn=mysql.connector.connect(host="localhost", username="root", password="", database="face_recognizer")
+        my_cursor = conn.cursor()
+        my_cursor.execute("Select * from student")
+        data= my_cursor.fetchall()
+        
+        if len(data)!=0:
+            self.student_table.delete(*self.student_table.get_children())
+            for i in data:
+                self.student_table.insert("", END, values=i)
+            conn.commit()
+        conn.close()
+            
 
 
 
