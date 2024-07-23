@@ -201,7 +201,7 @@ class Student:
         delete_btn = Button(btn_frame, text="Delete",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         delete_btn.grid(row=0, column=1)
 
-        update_btn = Button(btn_frame, text="Update",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        update_btn = Button(btn_frame, text="Update", command=self.update_data, width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         update_btn.grid(row=0, column=2)
 
         reset_btn = Button(btn_frame, text="Reset",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
@@ -376,8 +376,46 @@ class Student:
         self.var_address.set(data[12]),
         self.var_teacher.set(data[13]),
         self.var_radio1.set(data[14]),
-        
-        
+    
+
+    #Update function
+    def update_data(self):
+        if self.var_dep.get()=="Select Department" or self.var_std_name.get()=="" or self.var_std_id.get() == "":
+            messagebox.showerror("Error", "All Fields are required", parent=self.root)
+        else:
+            try:
+                Update = messagebox.askyesno("Update", "Do you want to update this student details?", parent=self.root)
+                if Update>0:
+                    conn=mysql.connector.connect(host="localhost", username="root", password="", database="face_recognizer")
+                    my_cursor = conn.cursor()
+                    my_cursor.execute("Update student  SET Dep=%s, Course=%s, Year=%s, Semester=%s, Name=%s, Division=%s, Roll=%s, Gender=%s, Dob=%s, Email=%s, Phone=%s, Address=%s, Teacher=%s, PhotoSample=%s WHERE Student_id=%s",(
+                                                                    self.var_dep.get(),
+                                                                    self.var_course.get(),
+                                                                    self.var_year.get(),
+                                                                    self.var_semester.get(),
+                                                                    self.var_std_name.get(),
+                                                                    self.var_div.get(),
+                                                                    self.var_roll.get(),
+                                                                    self.var_gender.get(),
+                                                                    self.var_dob.get(),
+                                                                    self.var_email.get(),
+                                                                    self.var_phone.get(),
+                                                                    self.var_address.get(),
+                                                                    self.var_teacher.get(),
+                                                                    self.var_radio1.get(),
+                                                                    self.var_std_id.get(),
+                                    ))
+                else:
+                    if not Update:
+                        return 
+
+                messagebox.showinfo("Success", "Student details successfully updated", parent=self.root)                           
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+            except Exception as e:
+                messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
+
         
         
             
