@@ -114,7 +114,7 @@ class Student:
         class_div_label.grid(row=1, column=0, padx=10, pady=5, sticky=W)
         
         div_combo = ttk.Combobox(class_student_frame, textvariable=self.var_div, font=("times new roman", 13, "bold"), width=18, state="readonly")
-        div_combo["values"] = ("Select Division", "A", "B", "C")
+        div_combo["values"] = ("", "A", "B", "C")
         div_combo.current(0)
         div_combo.grid(row=1, column=1, padx=10, pady=10, sticky=W)
 
@@ -204,7 +204,7 @@ class Student:
         update_btn = Button(btn_frame, text="Update", command=self.update_data, width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         update_btn.grid(row=0, column=2)
 
-        reset_btn = Button(btn_frame, text="Reset",width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        reset_btn = Button(btn_frame, text="Reset", command=self.reset_data, width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         reset_btn.grid(row=0, column=3)
 
 
@@ -442,7 +442,24 @@ class Student:
             
             except Exception as e:
                 messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
-        
+
+    #Reset
+    def reset_data(self):
+        self.var_dep.set("Select Department"),
+        self.var_course.set("Select Course"),
+        self.var_year.set("Select Year"),
+        self.var_semester.set("Select Semester"),
+        self.var_std_id.set("Select Department"),
+        self.var_std_name.set("Select Department"),
+        self.var_div.set(""),
+        self.var_roll.set(""),
+        self.var_gender.set("Select Gender"),
+        self.var_dob.set(""),
+        self.var_email.set(""),
+        self.var_phone.set(""),
+        self.var_address.set(""),
+        self.var_teacher.set(""),
+        self.var_radio1.set(""),
         
             
 
