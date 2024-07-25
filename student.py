@@ -253,6 +253,8 @@ class Student:
 
 
 
+
+       
         
         #Table Frame
         table_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE)
@@ -443,7 +445,7 @@ class Student:
             except Exception as e:
                 messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
 
-    #Reset
+    #Reset Function
     def reset_data(self):
         self.var_dep.set("Select Department"),
         self.var_course.set("Select Course"),
@@ -460,13 +462,6 @@ class Student:
         self.var_address.set(""),
         self.var_teacher.set(""),
         self.var_radio1.set(""),
-        
-            
-
-
-
-
-
 
 
 
