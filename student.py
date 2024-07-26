@@ -213,7 +213,7 @@ class Student:
         btn_frame2 = Frame(class_student_frame, bd=2, relief=RIDGE, bg="white")
         btn_frame2.place(x=10, y=260, width=680, height=40)
 
-        take_photo_btn = Button(btn_frame2, text="Take Photo Sample",width=33, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        take_photo_btn = Button(btn_frame2, command=self.generate_dataset, text="Take Photo Sample",width=33, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         take_photo_btn.grid(row=0, column=0)
 
         update_photo_btn = Button(btn_frame2, text="Update Photo Sample",width=33, font=("times new roman", 13, "bold"), bg="blue", fg="white")
@@ -495,7 +495,7 @@ class Student:
                                                                     self.var_address.get(),
                                                                     self.var_teacher.get(),
                                                                     self.var_radio1.get(),
-                                                                    self.var_std_id.get(),
+                                                                    self.var_std_id.get() ==id+1,
                                 ))   
                 conn.commit()
                 self.fetch_data()
@@ -515,6 +515,32 @@ class Student:
                     for (x,y,w,h) in faces:
                         face_cropped = img[y:y+h, x:x+w]
                         return face_cropped
+                    
+                cap=cv2.VideoCapture(0)
+                img_id = 0
+                while True:
+                    ret,my_frame=cap.read()
+                    if face_cropped(my_frame) is not None:
+                        img_id+=1
+                    face=cv2.resize(face_cropped(my_frame),(450,450)) #cropping image height and width
+                    face=cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+
+                    file_name_path = "data/user."+str(id)+"."+str(img_id)+".jpg"
+                    cv2.imwrite(file_name_path, face)
+
+                    cv2.putText(face, str(img_id),(50,50), cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0), 2)
+
+                    cv2.imshow("Cropped Face", face)
+
+                    if cv2.waitKey(1)==13 or int(img_id)==100: #stops capture if user presses enter or 100 images are captured
+                        break
+
+                cap.release()
+                cv2.destroyAllWindows()
+                messagebox.showinfo("Result", "Generating dataset completed!!!")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error due to: {str(e)}", parent=self.root)
+
 
 
 
