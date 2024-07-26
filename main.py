@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk # for image cropping and resizing
 from student import Student # importing the Student class from student.py
 
+
 class Face_Recognition_System:
 
     def __init__(self, root): # constructor

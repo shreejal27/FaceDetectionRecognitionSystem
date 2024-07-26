@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk # for image cropping and resizing
 from tkinter import messagebox
 import mysql.connector
+import cv2
 
 class Student:
 
@@ -462,6 +463,60 @@ class Student:
         self.var_address.set(""),
         self.var_teacher.set(""),
         self.var_radio1.set(""),
+
+
+
+    
+    #Generate data set and Take a photo sample
+    def generate_dataset(self):
+        if self.var_dep.get()=="Select Department" or self.var_std_name.get()=="" or self.var_std_id.get() == "":
+            messagebox.showerror("Error", "All Fields are required", parent=self.root)
+        else:
+            try:
+                conn=mysql.connector.connect(host="localhost", username="root", password="", database="face_recognizer")
+                my_cursor = conn.cursor()
+                my_cursor.execute("select * from student")
+                myresult = my_cursor.fetchall()
+                id=0
+                for x in myresult:
+                    id+=1
+                my_cursor.execute("Update student  SET Dep=%s, Course=%s, Year=%s, Semester=%s, Name=%s, Division=%s, Roll=%s, Gender=%s, Dob=%s, Email=%s, Phone=%s, Address=%s, Teacher=%s, PhotoSample=%s WHERE Student_id=%s",(
+                                                                    self.var_dep.get(),
+                                                                    self.var_course.get(),
+                                                                    self.var_year.get(),
+                                                                    self.var_semester.get(),
+                                                                    self.var_std_name.get(),
+                                                                    self.var_div.get(),
+                                                                    self.var_roll.get(),
+                                                                    self.var_gender.get(),
+                                                                    self.var_dob.get(),
+                                                                    self.var_email.get(),
+                                                                    self.var_phone.get(),
+                                                                    self.var_address.get(),
+                                                                    self.var_teacher.get(),
+                                                                    self.var_radio1.get(),
+                                                                    self.var_std_id.get(),
+                                ))   
+                conn.commit()
+                self.fetch_data()
+                self.reset_data()
+                conn.close()
+
+                #load predefined data on face frontals from openCV
+                #object detection ko lai
+                face_classifer = cv2.CascadeClassifier("haarcascade_frontalface_default.xml") 
+
+                def face_cropped(img):
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    faces = face_classifer.detectMultiScale(gray, 1.3, 5)
+                    # scaling factor = 1.3
+                    # Minimum Neighbors = 5
+
+                    for (x,y,w,h) in faces:
+                        face_cropped = img[y:y+h, x:x+w]
+                        return face_cropped
+
+
 
 
 
