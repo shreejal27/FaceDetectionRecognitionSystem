@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk # for image cropping and resizing
 from student import Student # importing the Student class from student.py
 import os
+from train import Train
 
 
 class Face_Recognition_System:
@@ -61,10 +62,10 @@ class Face_Recognition_System:
         img4 = img4.resize((220, 220), Image.LANCZOS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
 
-        b1 = Button(self.root, image=self.photoimg4, cursor="hand2")
+        b1 = Button(self.root, image=self.photoimg4, command=self.train_data, cursor="hand2")
         b1.place(x=200, y=400, width=220, height=220)
 
-        b1_1 = Button(self.root, text="Train Data", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+        b1_1 = Button(self.root, text="Train Data", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=200, y=600, width=220, height=40 )
 
 
@@ -102,6 +103,10 @@ class Face_Recognition_System:
         self.new_window = Toplevel(self.root)
         self.app = Student(self.new_window)
 
+
+    def train_data(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Train(self.new_window)
 
 
 
