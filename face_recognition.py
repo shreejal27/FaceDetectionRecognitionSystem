@@ -68,7 +68,7 @@ class Face_Recognition:
 
                 my_cursor.execute("select Student_id from student where Student_id=" + str(id))
                 i=my_cursor.fetchone()
-                i="+".join(i) if d else "Unknown"
+                i="+".join(i) if i else "Unknown"
 
 
 
