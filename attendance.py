@@ -16,6 +16,15 @@ class Attendance:
         self.root.geometry("1530x790+0+0")
         self.root.title("Face Recognition System")
 
+        #text variables
+        self.var_atten_id = StringVar()
+        self.var_atten_roll = StringVar()
+        self.var_atten_name = StringVar()
+        self.var_atten_dep = StringVar()
+        self.var_atten_time = StringVar()
+        self.var_atten_date = StringVar()
+        self.var_atten_attendance = StringVar()
+
         title_lbl = Label(self.root, text="Attendance Management", font=("times new roman", 20, "bold"), bg="white", fg="blue")
         title_lbl.place(x=0, y=0, width=1530, height=45)
 
@@ -35,21 +44,21 @@ class Attendance:
         attendanceId_label = Label(left_inside_frame, text="Attendance ID:", font=("times new roman", 13, "bold"),bg="white")
         attendanceId_label.grid(row=0, column=0, padx=10, sticky=W)
 
-        attendanceId_entry = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendanceId_entry = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_id, font=("times new roman", 13, "bold"))
         attendanceId_entry.grid(row=0, column=1, padx=10, pady=5, sticky=W)
 
         #Roll 
         rollLabel = Label(left_inside_frame, text="Roll:", font=("times new roman", 13, "bold"),bg="white")
         rollLabel.grid(row=0, column=2, padx=10, pady=5, sticky=W)
 
-        attendance_roll = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendance_roll = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_roll, font=("times new roman", 13, "bold"))
         attendance_roll.grid(row=0, column=3, padx=10, pady=5, sticky=W)
 
         #Name 
         nameLabel = Label(left_inside_frame, text="Name:", font=("times new roman", 13, "bold"),bg="white")
         nameLabel.grid(row=1, column=0, padx=10, pady=5, sticky=W)
 
-        attendance_name = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendance_name = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_name, font=("times new roman", 13, "bold"))
         attendance_name.grid(row=1, column=1, padx=10, pady=5, sticky=W)
 
 
@@ -57,28 +66,28 @@ class Attendance:
         depLabel = Label(left_inside_frame, text="Department:", font=("times new roman", 13, "bold"),bg="white")
         depLabel.grid(row=1, column=2, padx=10, pady=5, sticky=W)
 
-        attendance_dep = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendance_dep = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_dep, font=("times new roman", 13, "bold"))
         attendance_dep.grid(row=1, column=3, padx=10, pady=5, sticky=W)
 
         #Time 
         timeLabel = Label(left_inside_frame, text="Time:", font=("times new roman", 13, "bold"),bg="white")
         timeLabel.grid(row=2, column=0, padx=10, pady=5, sticky=W)
 
-        attendance_time = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendance_time = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_time, font=("times new roman", 13, "bold"))
         attendance_time.grid(row=2, column=1, padx=10, pady=5, sticky=W)
 
         #Date 
         dateLabel = Label(left_inside_frame, text="Date:", font=("times new roman", 13, "bold"),bg="white")
         dateLabel.grid(row=2, column=2, padx=10, pady=5, sticky=W)
 
-        attendance_date = ttk.Entry(left_inside_frame, width=20, font=("times new roman", 13, "bold"))
+        attendance_date = ttk.Entry(left_inside_frame, width=20, textvariable=self.var_atten_date, font=("times new roman", 13, "bold"))
         attendance_date.grid(row=2, column=3, padx=10, pady=5, sticky=W)
 
         #Attendance 
         attendanceLabel = Label(left_inside_frame, text="Attendance Status:", font=("times new roman", 13, "bold"),bg="white")
         attendanceLabel.grid(row=3, column=0, padx=10, pady=5, sticky=W)
 
-        self.atten_status = ttk.Combobox(left_inside_frame, font=("times new roman", 13, "bold"), state="readonly")
+        self.atten_status = ttk.Combobox(left_inside_frame, textvariable=self.var_atten_attendance, font=("times new roman", 13, "bold"), state="readonly")
         self.atten_status["values"] = ("Select", "Present", "Absent")
         self.atten_status.grid(row=3, column=1, padx=10, pady=5, sticky=W)
         self.atten_status.current(0)
@@ -97,7 +106,7 @@ class Attendance:
         update_btn = Button(btn_frame, text="Update", width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         update_btn.grid(row=0, column=2)
 
-        reset_btn = Button(btn_frame, text="Reset", width=16, font=("times new roman", 13, "bold"), bg="blue", fg="white")
+        reset_btn = Button(btn_frame, text="Reset", width=16, command=self.reset_data, font=("times new roman", 13, "bold"), bg="blue", fg="white")
         reset_btn.grid(row=0, column=3)
 
 
@@ -138,6 +147,7 @@ class Attendance:
 
         self.AttendanceReportTable.pack(fill=BOTH, expand=1)
 
+        self.AttendanceReportTable.bind("<ButtonRelease>", self.get_cursor)
     
     #fetch data
 
@@ -173,6 +183,28 @@ class Attendance:
 
         except Exception as es:
             messagebox.showerror("Error", f"Due to : {str(es)}", parent=self.root)
+
+    def get_cursor(self, event=""):
+        cursor_row = self.AttendanceReportTable.focus()
+        content = self.AttendanceReportTable.item(cursor_row)
+        rows = content["values"]
+        self.var_atten_id.set(rows[0])
+        self.var_atten_roll.set(rows[1])
+        self.var_atten_name.set(rows[2])
+        self.var_atten_dep.set(rows[3])
+        self.var_atten_time.set(rows[4])
+        self.var_atten_date.set(rows[5])
+        self.var_atten_attendance.set(rows[6])
+
+    def reset_data(self):
+        self.var_atten_id.set("")
+        self.var_atten_roll.set("")
+        self.var_atten_name.set("")
+        self.var_atten_dep.set("")
+        self.var_atten_time.set("")
+        self.var_atten_date.set("")
+        self.var_atten_attendance.set("")
+
 
 
 
