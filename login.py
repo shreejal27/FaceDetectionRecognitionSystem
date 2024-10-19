@@ -1,6 +1,7 @@
 from tkinter import * 
 from tkinter import ttk
 from tkinter import messagebox
+import mysql.connector
 
 class Login_Window:
     def __init__(self, root):
@@ -47,7 +48,7 @@ class Login_Window:
             messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
 
 
-        
+    
 
 
 
