@@ -74,8 +74,17 @@ class Register_Window:
 
                     messagebox.showinfo("Success", "Registration Successful", parent=self.root)
 
+                    # Redirect to login page
+                    self.root.withdraw() 
+                    self.show_login_window()  
+
             except Exception as es:
                 messagebox.showerror("Error", f"Error due to: {str(es)}", parent=self.root)
+
+    def show_login_window(self):
+        from login import Login_Window
+        self.new_window = Toplevel(self.root)
+        self.app = Login_Window(self.new_window)
 
 
 if __name__ == "__main__":
