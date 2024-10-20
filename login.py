@@ -1,6 +1,7 @@
 from tkinter import * 
 from tkinter import ttk
 from tkinter import messagebox
+from register import Register_Window
 import mysql.connector
 
 class Login_Window:
@@ -32,7 +33,7 @@ class Login_Window:
         loginbtn.place(x=50, y=300, width=250)
 
         #Registerbutton
-        registerbtn = Button(frame, text="Register", font=("times new roman", 15, "bold"), borderwidth=0, bg="black", fg="white")    
+        registerbtn = Button(frame, text="Register", command=self.register, font=("times new roman", 15, "bold"), borderwidth=0, bg="black", fg="white")    
         registerbtn.place(x=50, y=370, width=100)
 
         #Forgot Password
@@ -47,7 +48,9 @@ class Login_Window:
         else:
             messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
 
-
+    def register(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Register_Window(self.new_window)
     
 
 
