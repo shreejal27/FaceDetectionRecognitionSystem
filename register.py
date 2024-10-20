@@ -53,17 +53,17 @@ class Register_Window:
                 conn = mysql.connector.connect(
                     host="localhost", 
                     user="root", 
-                    password="password", 
+                    password="", 
                     database="face_recognizer"
                 )
                 cursor = conn.cursor()
 
                 # Check if the student exists in the 'student' table
-                cursor.execute("SELECT * FROM student WHERE username = %s", (self.txt_name.get(),))
+                cursor.execute("SELECT * FROM student WHERE name = %s", (self.txt_name.get(),))
                 student_record = cursor.fetchone()
 
                 if student_record is None:
-                    messagebox.showerror("Error", "Student does not exist in the student table", parent=self.root)
+                    messagebox.showerror("Error", "Registration Faild! You are not recorded in the system", parent=self.root)
                 
                 else:
                 # Insert query to store registration data
