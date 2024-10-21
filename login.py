@@ -25,7 +25,7 @@ class Login_Window:
         #entry
         self.txt_username = ttk.Entry(frame, font=("times new roman", 15, "bold"))
         self.txt_username.place(x=50, y=180, width=250)
-        self.txt_password = ttk.Entry(frame, font=("times new roman", 15, "bold"))
+        self.txt_password = ttk.Entry(frame, font=("times new roman", 15, "bold"), show="*")
         self.txt_password.place(x=50, y=250, width=250)
 
         #Loginbutton
@@ -41,20 +41,41 @@ class Login_Window:
         forgotbtn.place(x=160, y=370, width=150)
 
     def login(self):
-        if self.txt_username.get() == "" or self.txt_password.get() == "":
+
+        username = self.txt_username.get()
+        password = self.txt_password.get()
+
+        if username == "" or password == "":
             messagebox.showerror("Error", "All fields are required", parent=self.root)
-        elif self.txt_username.get() == "shree" or self.txt_password.get() == "shree":
-            messagebox.showinfo("Success", "Welcome to Face Detection and Recognition", parent=self.root)
+
         else:
-            messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
+            try:
+                connection = mysql.connector.connect(
+                    host="localhost",      
+                    user="root",    
+                    password="",  
+                    database="face_recognizer"    
+                )
+
+                cursor = connection.cursor()
+                query = "SELECT * FROM login WHERE username=%s AND password=%s"
+                cursor.execute(query, (username, password))
+                result = cursor.fetchone()
+                
+                if result:
+                    messagebox.showinfo("Success", "Welcome to Face Detection and Recognition", parent=self.root)
+                else:
+                    messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
+
+                connection.close()
+
+            except mysql.connector.Error as err:
+                messagebox.showerror("Database Error", f"Error: {err}")
 
     def register(self):
         self.new_window = Toplevel(self.root)
         self.app = Register_Window(self.new_window)
     
-
-
-
 
 
         #variables
