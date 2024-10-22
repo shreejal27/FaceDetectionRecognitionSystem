@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from register import Register_Window
+from face_recognition import Face_Recognition
 import mysql.connector
 
 class Login_Window:
@@ -64,6 +65,9 @@ class Login_Window:
                 
                 if result:
                     messagebox.showinfo("Success", "Welcome to Face Detection and Recognition", parent=self.root)
+
+                    self.root.withdraw() 
+                    self.show_face_recognition()  
                 else:
                     messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
 
@@ -75,6 +79,10 @@ class Login_Window:
     def register(self):
         self.new_window = Toplevel(self.root)
         self.app = Register_Window(self.new_window)
+    
+    def show_face_recognition(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Face_Recognition(self.new_window)
     
 
 
