@@ -111,8 +111,6 @@ class Face_Recognition:
 
 
 
-
-
 if __name__ == "__main__":
     root = Tk() # creating the object of the class
     obj = Face_Recognition(root)
