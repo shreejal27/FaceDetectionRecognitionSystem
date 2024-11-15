@@ -1,3 +1,60 @@
+ID, UserID, Name, Faculty, Time, Date, Status
+1, 1, shyam, BCA, 06:33:02, 01/10/2024, Present
+2, 2, ram, BBM, 06:37:41, 01/10/2024, Present
+3, 3, hari, BSc, 06:42:30, 01/10/2024, Present
 
-1, 1, Shreejal, BCA, 22:33:02, 01/10/2024 ,  Present
-Unknown, Unknown, Unknown, Unknown, 18:39:41, 10/10/2024 ,  Present
+4, 1, shyam, BCA, 06:35:05, 02/10/2024, Present
+5, 2, ram, BBM, 06:39:12, 02/10/2024, Present
+6, 3, hari, BSc, 06:41:18, 02/10/2024, Present
+
+7, 1, shyam, BCA, 06:36:15, 03/10/2024, Present
+8, 2, ram, BBM, 06:31:41, 03/10/2024, Present
+9, 3, hari, BSc, 06:38:22, 03/10/2024, Present
+
+10, 1, shyam, BCA, 06:34:00, 04/10/2024, Present
+11, 2, ram, BBM, 06:39:05, 04/10/2024, Present
+12, 3, hari, BSc, 06:37:30, 04/10/2024, Present
+
+13, 1, shyam, BCA, 06:32:45, 05/10/2024, Present
+14, 2, ram, BBM, 06:35:41, 05/10/2024, Present
+15, 3, hari, BSc, 06:40:00, 05/10/2024, Present
+
+16, 1, shyam, BCA, 06:38:10, 06/10/2024, Present
+17, 2, ram, BBM, 06:33:41, 06/10/2024, Present
+18, 3, hari, BSc, 06:34:11, 06/10/2024, Present
+
+19, 1, shyam, BCA, 06:36:20, 07/10/2024, Present
+20, 2, ram, BBM, 06:30:55, 07/10/2024, Present
+21, 3, hari, BSc, 06:37:25, 07/10/2024, Present
+
+22, 1, shyam, BCA, 06:39:40, 08/10/2024, Present
+23, 2, ram, BBM, 06:32:15, 08/10/2024, Present
+24, 3, hari, BSc, 06:34:05, 08/10/2024, Present
+
+25, 1, shyam, BCA, 06:31:50, 09/10/2024, Present
+26, 2, ram, BBM, 06:33:41, 09/10/2024, Present
+27, 3, hari, BSc, 06:35:55, 09/10/2024, Present
+
+28, 1, shyam, BCA, 06:37:30, 10/10/2024, Present
+29, 2, ram, BBM, 06:39:12, 10/10/2024, Present
+30, 3, hari, BSc, 06:40:45, 10/10/2024, Present
+
+31, 1, shyam, BCA, 06:35:55, 11/10/2024, Present
+32, 2, ram, BBM, 06:36:10, 11/10/2024, Present
+33, 3, hari, BSc, 06:31:05, 11/10/2024, Present
+
+34, 1, shyam, BCA, 06:30:40, 12/10/2024, Present
+35, 2, ram, BBM, 06:37:47, 12/10/2024, Present
+36, 3, hari, BSc, 06:35:40, 12/10/2024, Present
+
+37, 1, shyam, BCA, 06:32:30, 13/10/2024, Present
+38, 2, ram, BBM, 06:38:21, 13/10/2024, Present
+39, 3, hari, BSc, 06:39:40, 13/10/2024, Present
+
+40, 1, shyam, BCA, 06:36:02, 14/10/2024, Present
+41, 2, ram, BBM, 06:34:41, 14/10/2024, Present
+42, 3, hari, BSc, 06:40:30, 14/10/2024, Present
+
+43, 1, shyam, BCA, 06:33:40, 15/10/2024, Present
+44, 2, ram, BBM, 06:30:11, 15/10/2024, Present
+45, 3, hari, BSc, 06:38:15, 15/10/2024, Present
