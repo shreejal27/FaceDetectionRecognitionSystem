@@ -212,6 +212,6 @@ class Attendance:
 
 
 if __name__ == "__main__":
-    root = Tk() # creating the object of the class
+    root = Tk()  
     obj = Attendance(root)
     root.mainloop() # mainloop() is an infinite loop used to run the application, wait for an event to occur and process the event till the window is not closed.
