@@ -8,7 +8,7 @@ data['Name'] = data['Name'].str.strip().str.lower()
 data['Faculty'] = data['Faculty'].str.strip().str.lower()
 data['Time'] = data['Time'].str.strip()  # Remove leading/trailing spaces
 
-filtered_data = data[(data['Name'] == 'hari') & (data['Faculty'] == 'bsc')]
+filtered_data = data[(data['Name'] == 'shreejal') & (data['Faculty'] == 'bca')]
 
 if filtered_data.empty:
     print("No matching records found for the given filters.")

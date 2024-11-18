@@ -23,29 +23,13 @@ class Face_Recognition:
         b1_1.place(x=0, y=400, width=1530, height=50)
 
     def mark_attendance(self, i, r, n, d):
-        date_today = datetime.now().strftime("%d/%m/%Y")  # Current date
-        already_present = False  # Flag to check if attendance is already recorded
-
-        # Open the file in read+write mode
-        with open("Attendance.csv", "r+", newline="\n") as file:
-            myDataList = file.readlines()  # Read all lines of the file
-            name_list = []  # Track recorded names and dates
-
-            for line in myDataList:
-                entry = line.strip().split(",")  # Parse the CSV line
-                if len(entry) >= 6:  # Ensure the entry has at least ID, Roll, Name, Dept, Time, Date
-                    # Check if the ID matches and the date matches today's date
-                    if entry[0] == i and entry[5] == date_today:
-                        already_present = True  # Found a match
-                        break
-
-            if not already_present:  # If no entry for the person on today's date
+        if i not in self.session_marked_ids:
+            self.session_marked_ids.add(i)  # Add to the session-tracking set
+            with open("Attendance.csv", "a", newline="\n") as file:
                 now = datetime.now()
+                d1 = now.strftime("%d/%m/%Y")
                 dtString = now.strftime("%H:%M:%S")
-                file.writelines(f"\n{i}, {r}, {n}, {d}, {dtString}, {date_today}, Present")
-                print("Attendance Marked", f"Attendance marked for {n} ({r}) successfully!")
-            else:
-                print("Already Present", f"{n} ({r}) is already marked as present for today!")
+                file.writelines(f"\n{i}, {r}, {n}, {d}, {dtString}, {d1}, Present")
 
     def face_recog(self):
         def draw_boundary(img, classifier, scaleFactor, minNeighbors, color, text, clf):
