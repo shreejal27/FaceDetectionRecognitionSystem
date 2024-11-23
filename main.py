@@ -6,6 +6,7 @@ import os
 from train import Train
 from face_recognition import Face_Recognition
 from attendance import Attendance
+from predict import Predict
 
 
 class Face_Recognition_System:
@@ -57,6 +58,17 @@ class Face_Recognition_System:
         b1_1 = Button(self.root, text="Attendance", cursor="hand2",command=self.attendance_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
         b1_1.place(x=800, y=300, width=220, height=40)
 
+        #Predict Button
+        img7 = Image.open(r"Images\students.jpg")
+        img7 = img7.resize((220, 220), Image.LANCZOS)
+        self.photoimg7 = ImageTk.PhotoImage(img7)
+
+        b1 = Button(self.root, image=self.photoimg7, cursor="hand2", command=self.predict)
+        b1.place(x=1100, y=100, width=220, height=220)
+
+        b1_1 = Button(self.root, text="Predict with ML", cursor="hand2",command=self.predict, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+        b1_1.place(x=1100, y=300, width=220, height=40)
+
 
 
         #Train Face Button
@@ -105,7 +117,6 @@ class Face_Recognition_System:
         self.new_window = Toplevel(self.root)
         self.app = Student(self.new_window)
 
-
     def train_data(self):
         self.new_window = Toplevel(self.root)
         self.app = Train(self.new_window)
@@ -117,6 +128,10 @@ class Face_Recognition_System:
     def attendance_data(self):
         self.new_window = Toplevel(self.root)
         self.app = Attendance(self.new_window)
+    
+    def predict(self):
+        self.new_window = Toplevel(self.root)
+        self.app = Predict(self.new_window)
 
 
 
