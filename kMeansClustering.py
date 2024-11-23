@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
-class KMeansClusteringApp:
+class KMeansClusteringWindow:
     def __init__(self, root):
         self.root = root
         self.root.title("Student Behavior Analysis with K-Means")
@@ -142,5 +142,5 @@ class KMeansClusteringApp:
 # Driver code
 if __name__ == "__main__":
     root = Tk()
-    app = KMeansClusteringApp(root)
+    app = KMeansClusteringWindow(root)
     root.mainloop()
