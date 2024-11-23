@@ -46,8 +46,17 @@ class KMeansClusteringApp:
         lbl_output = Label(self.output_frame, text="Results:", font=("Arial", 14, "bold"))
         lbl_output.grid(row=0, column=0, sticky=W)
 
-        self.output_label = Text(self.output_frame, wrap=WORD, font=("Arial", 12), bg="lightgrey", state=DISABLED)
-        self.output_label.grid(row=1, column=0, padx=10, pady=5)
+        # Scrollbar and Text for results
+        self.scrollbar = Scrollbar(self.output_frame, orient=VERTICAL)
+        self.scrollbar.grid(row=1, column=1, sticky=NS)
+
+        self.output_label = Text(self.output_frame, wrap=WORD, font=("Arial", 12), bg="lightgrey", state=DISABLED, yscrollcommand=self.scrollbar.set)
+        self.output_label.grid(row=1, column=0, padx=10, pady=5, sticky=NSEW)
+
+        self.scrollbar.config(command=self.output_label.yview)
+
+        self.output_frame.grid_rowconfigure(1, weight=1)
+        self.output_frame.grid_columnconfigure(0, weight=1)
 
     def run_kmeans(self):
         try:
@@ -113,10 +122,13 @@ class KMeansClusteringApp:
             # Display results
             results = []
             for cluster_id, points in clusters.items():
-                results.append(f"Cluster {cluster_id + 1}: {', '.join([seconds_to_time(p) for p in points])}")
+                cluster_time = [seconds_to_time(p) for p in points]
+                cluster_total = len(points)
+                results.append(f"Cluster {cluster_id + 1}: {', '.join(cluster_time)} \n Total: {cluster_total} \n")
             
             results.append("\nCentroids (in HH:MM:SS):")
-            results.extend([seconds_to_time(c) for c in centroids])
+            for cluster_id, centroid in enumerate(centroids):
+                results.append(f"Cluster {cluster_id + 1}: Centroid: {seconds_to_time(centroid)}")
 
             self.output_label.config(state=NORMAL)
             self.output_label.delete(1.0, END)
