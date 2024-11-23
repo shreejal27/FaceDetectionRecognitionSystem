@@ -1,62 +1,134 @@
+from tkinter import *
+from tkinter import ttk, messagebox
 import numpy as np
 import pandas as pd
 from datetime import datetime
 
-# Sample Data
-data = [
-    {"ID": 1, "UserID": 1, "Name": "shyam", "Faculty": "BCA", "Time": "06:23:02", "Date": "01/10/2024", "Status": "Present"},
-    {"ID": 4, "UserID": 1, "Name": "shyam", "Faculty": "BCA", "Time": "06:35:05", "Date": "02/10/2024", "Status": "Present"},
-    {"ID": 7, "UserID": 1, "Name": "shyam", "Faculty": "BCA", "Time": "06:36:15", "Date": "03/10/2024", "Status": "Present"},
-    {"ID": 10, "UserID": 1, "Name": "shyam", "Faculty": "BCA", "Time": "06:34:00", "Date": "04/10/2024", "Status": "Present"},
-    # Add more rows for shyam as needed
-]
+class KMeansClusteringApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Student Behavior Analysis with K-Means")
+        self.root.geometry("750x550")
 
-# Convert to DataFrame
-df = pd.DataFrame(data)
+        # Frame for inputs
+        input_frame = Frame(self.root, bd=2, relief=RIDGE, padx=10, pady=10)
+        input_frame.place(x=50, y=50, width=650, height=200)
 
-# Function to convert time to seconds
-def time_to_seconds(time_str):
-    t = datetime.strptime(time_str, "%H:%M:%S")
-    return t.hour * 3600 + t.minute * 60 + t.second
+        title = Label(input_frame, text="K-Means Clustering - Arrival Time Analysis", font=("Arial", 16, "bold"))
+        title.grid(row=0, columnspan=2, pady=10)
 
-# Filter data for a specific student
-user_id = 1  # Input from user
-student_data = df[df['UserID'] == user_id]
-arrival_times = student_data['Time'].apply(time_to_seconds).values
+        # Name Input
+        lbl_name = Label(input_frame, text="Name:", font=("Arial", 12))
+        lbl_name.grid(row=1, column=0, padx=10, pady=5, sticky=W)
+        self.entry_name = Entry(input_frame, font=("Arial", 12))
+        self.entry_name.grid(row=1, column=1, padx=10, pady=5)
 
-# K-Means Clustering Implementation
-def k_means_clustering(data, k=3, max_iter=100):
-    # Randomly initialize centroids
-    centroids = np.random.choice(data, k, replace=False)
-    for _ in range(max_iter):
-        # Assign clusters
-        clusters = {i: [] for i in range(k)}
-        for point in data:
-            distances = [abs(point - centroid) for centroid in centroids]
-            cluster = distances.index(min(distances))
-            clusters[cluster].append(point)
-        
-        # Update centroids
-        new_centroids = np.array([np.mean(clusters[i]) if clusters[i] else centroids[i] for i in range(k)])
-        if np.all(centroids == new_centroids):
-            break
-        centroids = new_centroids
-    
-    return clusters, centroids
+        # Faculty Input
+        lbl_faculty = Label(input_frame, text="Faculty:", font=("Arial", 12))
+        lbl_faculty.grid(row=2, column=0, padx=10, pady=5, sticky=W)
+        self.entry_faculty = Entry(input_frame, font=("Arial", 12))
+        self.entry_faculty.grid(row=2, column=1, padx=10, pady=5)
 
-# Apply K-Means
-k = 3  # Number of clusters
-clusters, centroids = k_means_clustering(arrival_times, k)
+        # Number of Clusters Input
+        lbl_clusters = Label(input_frame, text="Number of Clusters (k):", font=("Arial", 12))
+        lbl_clusters.grid(row=3, column=0, padx=10, pady=5, sticky=W)
+        self.entry_clusters = Entry(input_frame, font=("Arial", 12))
+        self.entry_clusters.grid(row=3, column=1, padx=10, pady=5)
 
-# Print Results
-print("Clusters:")
-for cluster_id, points in clusters.items():
-    print(f"Cluster {cluster_id + 1}: {points}")
+        # Predict Button
+        btn_predict = Button(input_frame, text="Analyze Behavior", font=("Arial", 12, "bold"), bg="blue", fg="white", command=self.run_kmeans)
+        btn_predict.grid(row=4, columnspan=2, pady=10)
 
-print("\nCentroids (in seconds):", centroids)
+        # Frame for Output
+        self.output_frame = Frame(self.root, bd=2, relief=RIDGE, padx=10, pady=10)
+        self.output_frame.place(x=50, y=300, width=650, height=200)
 
-# Optional: Convert centroids back to time format
-def seconds_to_time(seconds):
-    return str(datetime.utcfromtimestamp(seconds).time())
+        lbl_output = Label(self.output_frame, text="Results:", font=("Arial", 14, "bold"))
+        lbl_output.grid(row=0, column=0, sticky=W)
 
-print("\nCentroids (in HH:MM:SS):", [seconds_to_time(c) for c in centroids])
+        self.output_label = Text(self.output_frame, wrap=WORD, font=("Arial", 12), bg="lightgrey", state=DISABLED)
+        self.output_label.grid(row=1, column=0, padx=10, pady=5)
+
+    def run_kmeans(self):
+        try:
+            # Validate inputs
+            name = self.entry_name.get().strip().lower()
+            faculty = self.entry_faculty.get().strip().lower()
+            k_clusters = self.entry_clusters.get().strip()
+
+            if not name or not faculty or not k_clusters:
+                raise ValueError("Name, Faculty, and Number of Clusters are required.")
+            
+            k_clusters = int(k_clusters)
+            if k_clusters < 1:
+                raise ValueError("Number of clusters (k) must be at least 1.")
+
+            # Read data from CSV
+            try:
+                data = pd.read_csv("attendance.csv", header=None, names=['ID', 'UserID', 'Name', 'Faculty', 'Time', 'Date', 'Status'])
+            except FileNotFoundError:
+                raise ValueError("File 'attendance.csv' not found. Please ensure the file exists.")
+
+            # Preprocess data
+            data['Name'] = data['Name'].str.strip().str.lower()
+            data['Faculty'] = data['Faculty'].str.strip().str.lower()
+            data['Time'] = data['Time'].str.strip()
+
+            # Filter data for the specific student
+            student_data = data[(data['Name'] == name) & (data['Faculty'] == faculty)]
+            if student_data.empty:
+                raise ValueError(f"No data found for Name '{name}' in Faculty '{faculty}'.")
+
+            # Function to convert time to seconds
+            def time_to_seconds(time_str):
+                t = datetime.strptime(time_str, "%H:%M:%S")
+                return t.hour * 3600 + t.minute * 60 + t.second
+
+            arrival_times = student_data['Time'].apply(time_to_seconds).values
+
+            # K-Means Clustering Implementation
+            def k_means_clustering(data, k=3, max_iter=100):
+                centroids = np.random.choice(data, k, replace=False)
+                for _ in range(max_iter):
+                    clusters = {i: [] for i in range(k)}
+                    for point in data:
+                        distances = [abs(point - centroid) for centroid in centroids]
+                        cluster = distances.index(min(distances))
+                        clusters[cluster].append(point)
+                    
+                    new_centroids = np.array([np.mean(clusters[i]) if clusters[i] else centroids[i] for i in range(k)])
+                    if np.all(centroids == new_centroids):
+                        break
+                    centroids = new_centroids
+                
+                return clusters, centroids
+
+            # Apply K-Means
+            clusters, centroids = k_means_clustering(arrival_times, k_clusters)
+
+            # Convert centroids back to time format
+            def seconds_to_time(seconds):
+                return str(datetime.utcfromtimestamp(seconds).time())
+
+            # Display results
+            results = []
+            for cluster_id, points in clusters.items():
+                results.append(f"Cluster {cluster_id + 1}: {', '.join([seconds_to_time(p) for p in points])}")
+            
+            results.append("\nCentroids (in HH:MM:SS):")
+            results.extend([seconds_to_time(c) for c in centroids])
+
+            self.output_label.config(state=NORMAL)
+            self.output_label.delete(1.0, END)
+            self.output_label.insert(END, "\n".join(results))
+            self.output_label.config(state=DISABLED)
+
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+
+# Driver code
+if __name__ == "__main__":
+    root = Tk()
+    app = KMeansClusteringApp(root)
+    root.mainloop()
